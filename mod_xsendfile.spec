@@ -1,14 +1,13 @@
 Summary:	Apache module to send files efficiently
 Name:		mod_xsendfile
 Version:	0.12
-Release:	4%{?dist}
+Release:	5%{?dist}
 Group:		System Environment/Daemons
 License:	ASL 2.0
 URL:		https://tn123.org/%{name}/
 Source0:	https://tn123.org/%{name}/%{name}-%{version}.tar.bz2
 Source1:	xsendfile.conf
 BuildRequires:	httpd-devel
-Requires:	httpd-mmn = %(cat %{_includedir}/httpd/.mmn || echo missing httpd-devel)
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %global modulesdir %{_libdir}/httpd/modules
@@ -31,13 +30,13 @@ It is useful for processing script-output of e.g. php, perl or any cgi.
 
 
 %build
-%{_sbindir}/apxs -c %{name}.c
+apxs -c %{name}.c
 
 
 %install
 rm -rf $%{buildroot}
 mkdir -p %{buildroot}/%{modulesdir}
-%{_sbindir}/apxs -i -S LIBEXECDIR=%{buildroot}/%{modulesdir} -n %{name} %{name}.la
+apxs -i -S LIBEXECDIR=%{buildroot}/%{modulesdir} -n %{name} %{name}.la
 mkdir -p %{buildroot}/%{confdir}
 cp -p %SOURCE1 %{buildroot}/%{confdir}
 
@@ -54,6 +53,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Mar 27 2012 Orion Poplawski <orion@cora.nwra.com> 0.12-5
+- Rebuild for httpd 2.4, drop path for apxs
+- Drop Requires httpd-mmn, no longer provided by httpd
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.12-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
