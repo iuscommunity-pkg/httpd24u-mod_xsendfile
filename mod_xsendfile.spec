@@ -33,8 +33,8 @@ It is useful for processing script-output of e.g. php, perl or any cgi.
 
 %install
 rm -rf $%{buildroot}
-mkdir -p %{buildroot}/%{modulesdir}
-%{_httpd_apxs} -i -S LIBEXECDIR=%{buildroot}/%{modulesdir} -n %{name} %{name}.la
+mkdir -p %{buildroot}/%{_httpd_moddir}
+%{_httpd_apxs} -i -S LIBEXECDIR=%{buildroot}/%{_httpd_moddir} -n %{name} %{name}.la
 mkdir -p %{buildroot}/%{_httpd_modconfdir}
 cp -p %SOURCE1 %{buildroot}/%{_httpd_modconfdir}
 
