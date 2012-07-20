@@ -1,7 +1,7 @@
 Summary:	Apache module to send files efficiently
 Name:		mod_xsendfile
 Version:	0.12
-Release:	5%{?dist}
+Release:	6%{?dist}
 Group:		System Environment/Daemons
 License:	ASL 2.0
 URL:		https://tn123.org/%{name}/
@@ -51,6 +51,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.12-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Tue Mar 27 2012 Orion Poplawski <orion@cora.nwra.com> 0.12-5
 - Rebuild for httpd 2.4, update for new module guidelines
 
