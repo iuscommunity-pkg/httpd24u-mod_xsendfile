@@ -44,7 +44,6 @@ rm -rf %{buildroot}
 
 
 %files
-%defattr(-,root,root,-)
 %doc docs/*
 %config(noreplace) %{_httpd_modconfdir}/xsendfile.conf
 %{_httpd_moddir}/%{name}.so
