@@ -1,18 +1,25 @@
+# IUS spec file for httpd24u-mod_xsendfile forked from Fedora:
+
+%global httpd httpd24u
+%global module mod_xsendfile
+
 Summary:	Apache module to send files efficiently
-Name:		mod_xsendfile
+Name:		%{httpd}-%{module}
 Version:	0.12
-Release:	12%{?dist}
+Release:	1.ius%{?dist}
 Group:		System Environment/Daemons
 License:	ASL 2.0
-URL:		https://tn123.org/%{name}/
-Source0:	https://tn123.org/%{name}/%{name}-%{version}.tar.bz2
-Source1:	xsendfile.conf
-BuildRequires:	httpd-devel
-Requires:       httpd-mmn = %{_httpd_mmn}
+URL:		https://tn123.org/%{module}/
+Source0:	https://tn123.org/%{module}/%{module}-%{version}.tar.bz2
+Source1:	10-xsendfile.conf
+BuildRequires:	%{httpd}-devel
+Requires:       %{httpd}, httpd-mmn = %{_httpd_mmn}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+Conflicts:      %{module}
+
 %description
-%{name} is a small Apache2 module that processes X-SENDFILE headers
+%{module} is a small Apache2 module that processes X-SENDFILE headers
 registered by the original output handler.
 
 If it encounters the presence of such header it will discard all output and
@@ -24,17 +31,17 @@ It is useful for processing script-output of e.g. php, perl or any cgi.
 
 
 %prep
-%setup -q
+%setup -q -n %{module}-%{version}
 
 
 %build
-%{_httpd_apxs} -c %{name}.c
+%{_httpd_apxs} -c %{module}.c
 
 
 %install
 rm -rf $%{buildroot}
 mkdir -p %{buildroot}/%{_httpd_moddir}
-%{_httpd_apxs} -i -S LIBEXECDIR=%{buildroot}/%{_httpd_moddir} -n %{name} %{name}.la
+%{_httpd_apxs} -i -S LIBEXECDIR=%{buildroot}/%{_httpd_moddir} -n %{module} %{module}.la
 mkdir -p %{buildroot}/%{_httpd_modconfdir}
 cp -p %SOURCE1 %{buildroot}/%{_httpd_modconfdir}
 
@@ -45,11 +52,14 @@ rm -rf %{buildroot}
 
 %files
 %doc docs/*
-%config(noreplace) %{_httpd_modconfdir}/xsendfile.conf
-%{_httpd_moddir}/%{name}.so
+%config(noreplace) %{_httpd_modconfdir}/10-xsendfile.conf
+%{_httpd_moddir}/%{module}.so
 
 
 %changelog
+* Mon Jul 11 2016 Ben Harper <ben.harper@rackspace.com> - 0.12.-1.ius
+- Port from Fedora to IUS
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.12-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
