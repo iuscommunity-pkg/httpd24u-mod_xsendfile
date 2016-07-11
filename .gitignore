@@ -1,1 +1,6 @@
-/mod_xsendfile-0.12.tar.bz2
+BUILD
+BUILDROOT
+MOCK
+RPMS
+SOURCES/*.tar.bz2
+SRPMS
